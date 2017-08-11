@@ -1,0 +1,3 @@
+{{extend 'layout.html'}}
+<h1>{{=T('Choose the command')}}</h1>
+{{=form}}

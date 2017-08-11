@@ -1,0 +1,30 @@
+# -*- coding: utf-8 -*-
+
+def index():
+    return dict(message="hello from device.py")
+
+def get_command():
+    row = db(db.tbAction.id>0).select().last()
+    if row:
+        dateTimeDiff = request.now - row.mDateTime
+        print row.mCommand
+        command = 'open' if row.mCommand=='1' else 'close'
+        command = command if dateTimeDiff.seconds <= TIME_LIMIT else 'idle'
+        command += str(row.mCommand)
+    else:
+        command = 'idle'
+    #import json
+    #return json.dumps({'result':resultado})
+    return command
+
+def set_command():
+    form = SQLFORM(db.tbAction)
+
+    if form.process().accepted:
+        response.flash = 'form accepted'
+    elif form.errors:
+        response.flash = 'form has errors'
+    else:
+        response.flash = 'please fill out the form'
+
+    return dict(form=form)

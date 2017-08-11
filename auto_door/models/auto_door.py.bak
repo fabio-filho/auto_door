@@ -1,0 +1,7 @@
+# -*- coding: utf-8 -*-
+
+PASSWORD = '95059402'
+
+db.define_table('tbAction',
+                Field('mCommand', requires=IS_IN_SET(0,1)),
+                Field('mDateTime'), default=lambda: request.now)
